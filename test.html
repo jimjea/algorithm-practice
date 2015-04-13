@@ -1,0 +1,816 @@
+<html>
+<head>
+    <title>Algorithm Testing</title>
+</head>
+<body>
+  <div id="test">Algorithm Testing</div>
+  <script>
+
+
+
+  'use strict';
+
+
+
+  var longestPalindrome = function(string) {
+    var checker = function(index1, index2) {
+      while(index1 >= 0 && index2 < string.length && string[index1] === string[index2]) {
+        index1--;
+        index2++;
+      }
+      return string.slice(index1+1, index2);
+    };
+
+    var highest = '';
+    for (var i = 0; i < string.length; i++) {
+      var odd = checker(i-1, i+1);
+      var even = checker(i, i+1);
+      if (odd.length > highest.length) {
+        highest = odd;
+      }
+      if (even.length > highest.length) {
+        highest = even;
+      }
+    }
+
+    return highest;
+
+  }
+
+
+  var allAnagrams = function(string) {
+    var output = {};
+    var recurse = function(lettersLeft, word) {
+      if (lettersLeft === '') {
+        output[word] = 1;
+        return;
+      }
+      for (var i = 0; i < lettersLeft.length; i++) {
+        recurse(lettersLeft.slice(0, i) + lettersLeft.slice(i+1), word + lettersLeft[i]);  
+      }
+    }
+    recurse(string, '');
+    return Object.keys(output);
+  }
+
+
+
+
+  var LinkedList = function(value) {
+    this.value = value;
+    this.next = null;
+    this.prev = null;
+  };
+
+  var a = new LinkedList('a');
+  var b = new LinkedList('b');
+  var c = new LinkedList('c');
+  var d = new LinkedList('d');
+  var e = new LinkedList('e');
+
+  a.next = b;
+  b.next = c;
+  c.next = d;
+  d.next = e;
+
+
+  var reverseList = function(node) {
+    var prev = null;
+    var next;
+    while (next = node.next) {
+      node.next = prev;
+      prev = node;
+      node = next;
+    }
+    node.next = prev;
+    return node;
+  };
+
+
+
+
+
+  function outer(){
+     var x=1;
+     var inner = function(x){
+      console.log(x)
+        alert(">"+x);
+     }
+     x=2;
+     return inner;
+  };
+   
+  // outer();
+
+
+
+  var testString = 'abcdef';
+  var failString = 'abcdefa';
+
+  var unique = function(string) {
+    var hashTable = {};
+    for (var i = 0; i < string.length; i++) {
+      if (hashTable[string[i]]) {
+        return false;
+      } else {
+        hashTable[string[i]] = true;
+      }
+    }
+    return true;
+  }
+
+  var reverseOptimized = function(string) {
+    var split = string.split('');
+    var halfwayPoint = Math.floor(string.length/2);
+    var temp;
+    for (var i = 0; i < halfwayPoint; i++) {
+      temp = split[string.length - i - 1];
+      split[string.length - i - 1] = split[i];
+      split[i] = temp;
+    }
+    return split.join('');
+  }
+
+  function reverse(s) {
+    s = s.split('');
+    var len = s.length,
+        halfIndex = Math.floor(len / 2) - 1,
+        tmp;
+    for (var i = 0; i <= halfIndex; i++) {
+      tmp = s[len - i - 1];
+      s[len - i - 1] = s[i];
+      s[i] = tmp;
+    }
+    return s.join('');
+  }
+
+
+  var removeDupes = function(string) {
+    var split = string.split('');
+    for (var i = 0; i < split.length; i++) {
+      var letter = split[i];
+      console.log(letter);
+      for (var j = 0; j < split.length; j++) {
+        if (split[j] === letter && j !== i) {
+          console.log(split);
+          split.splice(i,1);
+        }
+      }
+    }
+    return split.join('');
+  }
+
+
+  var isAnagram = function(a, b) {
+    if (a.length !== b.length) {
+      return false;
+    }
+    if (a === b) {
+      return false;
+    }
+    var aSort = a.toUpperCase().split('').sort().join('');
+    var bSort = b.toUpperCase().split('').sort().join('');
+    return aSort == bSort;
+  }
+
+  var replacer = function(string) {
+    string = string.split('');
+    string.forEach(function(value, index) {
+      if (value === ' ') {
+        string.splice(index, 1, '%20');
+      }
+    });
+    return string.join('');
+  }
+
+
+  var matrix = [
+    [1,2,3],
+    [4,5,6],
+    [7,8,9]
+  ];
+
+  var rotate = function(matrix, direction) {
+    direction = direction || 1;
+    var rowLength = matrix[0] && matrix[0].length;
+    var columnLength = matrix.length;
+    var output = [];
+    for (var i = 0; i < rowLength; i++) {
+      output[i] = [];
+      for (var j = 0; j < columnLength; j++) {
+        if (direction > 0) {
+          output[i].push(matrix[columnLength - j - 1][i]);
+        } else {
+          output[i].push(matrix[j][rowLength - i - 1]);
+        }
+      }
+    }
+    return output;
+  }
+
+
+  var rotateInPlace = function(matrix, direction) {
+    direction = direction || 1;
+    var rowLength = matrix[0].length;
+    var columnLength = matrix.length;
+    for (var i = 0; i < rowLength; i++) {
+      for (var j = 0; j < columnLength; j++) {
+        if (direction > 0) {
+          matrix[i][j] = matrix[columnLength - j - 1][i];
+        } else {
+          matrix[i][j] = matrix[j][rowLength - i - 1];
+        }
+      }
+    }
+    return matrix;
+  }
+
+
+
+  var testMN = [
+    [1,2,3,0],
+    [2,0,4,5],
+    [9,3,2,1]
+  ]
+
+  var testMN1 = [
+    [1,2,3,0],
+    [2,0,4,5],
+    [9,3,2,1]
+  ]
+
+  var zeroConvert = function(matrix) {
+    var rowLength = matrix[0].length;
+    var columnLength = matrix.length;
+    var zeroPlaces = [];
+    var converter = function(row, column) {
+      for (var i = 0; i < rowLength; i++) {
+        matrix[row][i] = 0;
+      }
+      for (var j = 0; j < columnLength; j++) {
+        matrix[j][column] = 0;
+      }
+    }
+    for (var i = 0; i < columnLength; i++) {
+      for (var j = 0; j < rowLength; j++) {
+        if (matrix[i][j] === 0) {
+          zeroPlaces.push([i,j]);
+        }
+      }
+    }
+    for (var i = 0; i < zeroPlaces.length; i++) {
+      converter(zeroPlaces[i][0], zeroPlaces[i][1]);
+    }
+    return matrix;
+  }
+
+
+
+  var isSubstring = function(a, b) {
+    if (b.indexOf(a) !== -1) {
+      return true;
+    }
+    return false;
+  };
+
+  var isRotated = function(s1, s2) {
+    if (s1.length !== s2.length) {
+      return false;
+    }
+    return isSubstring(s1, s2 + s2);
+  };
+
+
+
+
+  var LinkedList = function() {
+    this.head = null;
+    this.tail = null;
+  };
+
+  LinkedList.prototype.makeNode = function(value) {
+    var node = {};
+    node.value = value;
+    node.next = null;
+    return node;
+  };
+
+  LinkedList.prototype.addToTail = function(value) {
+    var newNode = this.makeNode(value);
+    if (!this.head) {
+      this.head = newNode;
+    }
+    if (this.tail) {
+      this.tail.next = newNode;
+    }
+    this.tail = newNode;
+  };
+
+  LinkedList.prototype.removeHead = function() {
+    var currentHead = this.head;
+    if (!this.head) {
+      return null;
+    }
+    if (this.head === this.tail) {
+      this.head = this.tail = null;
+    } else {
+      this.head = this.head.next;
+    }
+    return currentHead.value;
+  };
+
+  LinkedList.prototype.contains = function(target) {
+    var node = this.head;
+    while (node) {
+      if (node.value === target) {
+        return true;
+      }
+      node = node.next;
+    }
+    return false;
+  };
+
+  var list = new LinkedList();
+  list.addToTail(1);
+  list.addToTail(2);
+  list.addToTail(3);
+  list.addToTail(2);
+  list.addToTail(4);
+  // list.addToTail(3);
+  // list.addToTail(1);
+  list.addToTail(5);
+  // list.addToTail(2);
+  list.addToTail(6);
+  // list.addToTail(3);
+
+
+
+  var removeDupesWithBuffer = function(list) {
+    var dupeTracker = {};
+    var prevNode = list.head;
+    var currentNode = list.head;
+    while (currentNode) {
+      if (!dupeTracker[currentNode.value]) {
+        dupeTracker[currentNode.value] = true;
+      } else {
+        prevNode.next = currentNode.next;
+      }
+      prevNode = currentNode;
+      currentNode = currentNode.next;
+    }
+    return list;
+  }
+
+
+
+  var nthNode = function(list, n) {
+    var nth = list.head;
+    var tracker = list.head;
+    for (var i = 1; i < n; i++) {
+      tracker = tracker.next;
+    }
+    while (tracker = tracker.next) {
+      nth = nth.next;
+    }
+    return nth;
+  };
+
+  
+  var removeNode = function(list, value) {
+    var prev = list.head;
+    var currentNode = list.head;
+    while (currentNode) {
+      if (currentNode.value === value) {
+        prev.next = currentNode.next;
+        return list;
+      }
+      prev = currentNode;
+      currentNode = currentNode.next;
+    }
+    return null;
+  };
+
+
+  var circularLinkedList = function(list) {
+    var fast = list.head;
+    var slow = list.head;
+    var moveSlow = false;
+    while (fast = fast.next) {
+      if (fast.value === slow.value) {
+        return true;
+      }
+      if (moveSlow) {
+        slow = slow.next;
+      }
+      moveSlow = !moveSlow;
+    }
+    return false;
+  };
+
+
+  var Stack = function() {
+    this._storage = [];
+    this._minStorage = [];
+    this._size = 0;
+    this._minStoreSize = 0;
+  };
+
+  Stack.prototype.push = function(value) {
+    var storage = this._storage;
+    var minStore = this._minStorage;
+    if (this._size === 0) {
+      storage.push(value);
+      minStore.push(value);
+      this._size++;
+      this._minStoreSize++;
+    } else {
+      storage.push(value);
+      if (minStore[minStore.length - 1] > value) {
+        minStore.push(value);
+        this._minStoreSize++;
+      }
+      this._size++;
+    }
+  };
+
+  Stack.prototype.pop = function() {
+    var storage = this._storage;
+    var minStore = this._minStorage;
+    if (this._size > 0) {
+      var popped = storage[this._size - 1];
+      this._storage = storage.slice(0, storage.length - 1);
+      this._size--;
+    }
+    if (popped === minStore[this._minStoreSize - 1]) {
+      this._minStorage = minStore.slice(0, minStore.length - 1);
+      this._minStoreSize--;
+    }
+    return popped;
+  };
+
+  Stack.prototype.min = function() {
+    return this._minStorage[this._minStorage.length - 1];
+  };
+
+  Stack.prototype.size = function() {
+    return this._size;
+  }
+
+  var stackTest = new Stack();
+
+  stackTest.push(10);
+  stackTest.push(8);
+  stackTest.push(5);
+  stackTest.push(4);
+  stackTest.push(1);
+  stackTest.push(9);
+
+
+
+  var SOS = function(limit) {  // set of stacks!!
+    this._limit = limit;
+    this._storage = [];
+    this._size = 0;
+  };
+
+  SOS.prototype.push = function(value) {
+    if (this._size === 0 || this._size % this._limit === 0) {
+      this._storage.push([]);
+      this._storage[this._storage.length - 1].push(value);
+    } else {
+      this._storage[this._storage.length - 1].push(value);
+    }
+    this._size++;
+  };
+
+  SOS.prototype.pop = function() {
+    if (this._size > 0) {
+      if (this._size % this._limit === 0) {
+        this._storage.pop();
+      }
+      var popped = this._storage[this._storage.length - 1].pop();
+      this._size--;
+    }
+    return popped;
+  };
+
+  SOS.prototype.popAt = function(index) {
+    return this._storage[index].pop();
+  };
+
+
+
+  var setOfStacks = new SOS(3);
+  setOfStacks.push(1);
+  setOfStacks.push(2);
+  setOfStacks.push(3);
+  setOfStacks.push(4);
+  setOfStacks.push(5);
+  setOfStacks.push(6);
+  setOfStacks.push(7);
+  setOfStacks.push(8);
+
+
+
+  var Queue = function() {
+    this._enterStack = new Stack();
+    this._exitStack = new Stack();
+  };
+
+  Queue.prototype.push = function(value) {
+    this._enterStack.push(value);
+    if (this._exitStack._size === 0) {
+      while(this._enterStack._size > 0) {
+        this._exitStack.push(this._enterStack.pop());
+      }
+    }
+  };
+
+  Queue.prototype.pop = function() {
+    if (this._enterStack._size > 0 || this._exitStack._size > 0) {
+      if (this._exitStack._size === 0) {
+        while (this._enterStack._size > 0) {
+          this._exitStack.push(this._enterStack.pop());
+        }
+        return this._exitStack.pop();
+      } else {
+        return this._exitStack.pop();
+      }
+    } else {
+      return null;
+    }
+  };
+
+  Queue.prototype.size = function() {
+    return this._enterStack._size + this._exitStack._size;
+  };
+
+  var concat = function () {
+    return [].concat.apply([], arguments);
+  };
+
+  var quickSort = function(array) {
+    // debugger;
+    if (array.length <= 1) {
+      return array;
+    }
+    var pivot = array[0];
+    var remainingArray = array.slice(1);
+    var left = [];
+    var right = [];
+
+    for (var i = 0; i < remainingArray.length; i++) {
+      if (remainingArray[i] < pivot) {
+        left.push(remainingArray[i]);
+      } else {
+        right.push(remainingArray[i]);
+      }
+    }
+
+    var leftSort = quickSort(left);
+    var rightSort = quickSort(right);
+
+    return concat(leftSort, [pivot], rightSort);
+  };
+
+
+
+  var qs = function(arr) {
+    if (arr.length <= 1) {
+      return arr;
+    }
+    var pivot = arr[0];
+    var remainingArray = arr.slice(1);
+    var left = [];
+    var right = [];
+    for (var i = 0; i < remainingArray.length; i++) {
+      if (remainingArray[i] < pivot) {
+        left.push(remainingArray[i]);
+      } else {
+        right.push(remainingArray[i]);
+      }
+    }
+
+    return qs(left).concat(pivot, qs(right));
+  };
+
+
+
+  var mergeSort = function(array) {
+    if (array.length <= 1) {
+      return array;
+    }
+    var half = Math.floor(array.length/2);
+    var left = mergeSort(array.slice(0, half));
+    var right = mergeSort(array.slice(half));
+    var merged = [];
+    var li = 0;
+    var ri = 0;
+    while (merged.length < left.length + right.length) {
+      if (left[li] < right[ri]) {
+        merged.push(left[li]);
+        li++;
+      } else {
+        merged.push(right[ri]);
+        ri++;
+      }
+    }
+    return merged;
+  };
+
+
+  var testStack = new Stack();
+
+  testStack.push(3);
+  testStack.push(1);
+  testStack.push(2);
+  testStack.push(5);
+  testStack.push(7);
+  testStack.push(4);
+
+  var sortStack = function(stack, direction) {
+    direction = direction || 1;
+    var temp = [];
+    while (stack.size() > 0) {
+      temp.push(stack.pop());
+    }
+    temp = mergeSort(temp);
+    if (direction > 0) {
+      for (var i = temp.length - 1; i >= 0; i--) {
+        stack.push(temp[i]);
+      }
+    }
+    return stack;
+  };
+
+
+  var rockPaperScissors = function(rounds) {
+    var output = [];
+    var combo = ['rock', 'paper', 'scissor'];
+    var recurse = function(roundsLeft, combination) {
+      if (roundsLeft === 0) {
+        output.push(combination.slice());
+        return;
+      }
+      for (var i = 0; i < combo.length; i++) {
+        combination.push(combo[i]);
+        recurse(roundsLeft-1, combination);
+        combination.pop();
+      }
+    };
+    recurse(rounds, []);
+    return output;
+  };
+
+
+  var orderedDeck = function() {
+    var suits = [ ' Hearts', ' Spade', ' Clubs', ' Diamonds' ];
+    var values = [ 'A', 2, 3, 4, 5, 6, 7, 8, 9, 10, 'J', 'Q', 'K' ];
+    var deck = [];
+
+    suits.forEach(function(suit) {
+      values.forEach(function(value) {
+        deck.push(value + suit);
+      });
+    });
+
+    return deck;
+  };
+
+  var deck = orderedDeck();
+
+  var deckShuffler = function(deck) {
+    var swap = function(a, b) {
+      var temp = deck[a];
+      deck[a] = deck[b];
+      deck[b] = temp;
+    };
+    for (var i = 0; i < deck.length; i++) {
+      var random = Math.floor(Math.random() * deck.length);
+      swap(i, random);
+    }
+    return deck;
+  };
+
+
+  var dupes = function(array) {
+    var hash = {};
+    return array.filter(function(val) {
+      if (!hash[val]) {
+        hash[val] = true;
+        return true;
+      } else {
+        return false;
+      }
+    });
+  };
+
+  var toyProblemToDo = function(array) {
+    var random = Math.floor(Math.random() * array.length);
+    return array[random];
+  };
+
+  var problems = ['linkedListCycles',
+  'allAnagrams'          ,       'linkedListRuby',
+  'asyncMap'           ,         'longestPalindrome',
+  'balancedParens'       ,       'longestRun',
+  'binarySearchArray'    ,       'lruCache',
+  'bubbleSort'           ,       'mergeSort',
+  'calculator'           ,       'missingNumber',
+  'characterFrequency'   ,       'monkeyPatching',
+  'coinSums'             ,       'nonrepeatedCharacter',
+  'commonAncestor'       ,       'nthFibonacci',
+  'commonCharacters'     ,       'numberToEnglish',
+  'commonFactors'        ,       'pigLatinConverter',
+  'composePipe'          ,       'powerOfTwo',
+  'constantTimeStackMin'  ,      'powerSet',
+  'deepEquality'          ,      'primeTester',
+  'delayedTextbox'         ,     'queueStack',
+  'doublyLinkedList'        ,    'quicksort',
+  'emailRegex'              ,    'radialGradient',
+  'es6Features'             ,    'rangeClass',
+  'evenOccurrence'          ,    'recursiveLinkedListContains',
+  'eventingLibrary'         ,    'reverseArray',
+  'extend'                  ,    'reverseLinkedList',
+  'fillerTextGenerator'     ,    'robotPaths',
+  'fractionConverter'       ,    'rockPaperScissors',
+  'functionBind'            ,    'rockPaperScissorsII',
+  'functionalMath'          ,    'romanNumeralTranslator',
+  'getElementsByClassName'  ,    'rotateMatrix',
+  'hashTable'               ,    'rotatedArraySearch',
+  'hashTableResizing'       ,    'shuffleDeck',
+  'heap'                    ,    'smartTextbox',
+  'heapsort'                ,    'sortableTable',
+  'htmlEscaper'             ,    'spiralTraversal',
+  'htmljQueryColor'         ,    'sumArray',
+  'implementingOperators'   ,    'telephoneWords',
+  'inPlaceArrayReverse'     ,    'testFixtureA',
+  'insertionSort'           ,    'testFixtureB',
+  'integerGenerator'         ,   'tree',
+  'isAnagram'                ,   'treeBFSelect',
+  'isSubsetOf'               ,   'treeCountLeaves',
+  'jsonpFetcher'             ,   'treeDFSelect',
+  'largestProductOfThree'    ,   'treeMap',
+  'linkedList']
+
+
+  var recurseLinkedList = function(list, target) {
+    if (!list) {
+      return false;
+    }
+    if (list.value === target) {
+      return true;
+    }
+    return recurseLinkedList(list = list.next, target);
+  };
+
+  var Tree = function(val) {
+    this.value = val;
+    this._children = [];
+  };
+
+  Tree.prototype.addChild = function(val) {
+    var node = new Tree(val);
+    this._children.push(node);
+    return node;
+  };
+
+  var testTree = new Tree(1);
+  var branch2 = testTree.addChild(2);
+  var branch3 = testTree.addChild(3);
+  var branch4 = branch2.addChild(4);
+  var branch5 = branch2.addChild(5);
+  var branch6 = branch3.addChild(6);
+
+
+
+  var BFS = function(tree, filter) {
+    var output = [];
+    var queue = [];
+    queue.push(tree);
+    var currentNode;
+    while (currentNode = queue.pop()) {
+      if (filter(currentNode.value)) {
+        output.push(currentNode.value);
+      }
+      for (var i = 0; i < currentNode._children.length; i++) {
+        queue.unshift(currentNode._children[i]);
+      }
+    }
+    return output;
+  };
+
+  var oddNumbers = function(num) {
+    return num % 2;
+  };
+
+  var evenNumbers = function(num) {
+    return num % 2 === 0;
+  };
+
+
+  </script>
+  
+</body>
+ 
+</html>
